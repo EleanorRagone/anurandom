@@ -12,7 +12,7 @@ CXXFLAGS:=-std=c++0x
 # common part
 STRIP:=strip
 CXXFLAGS+=-Wall -O3 -DNDEBUG -pipe -MD
-LDFLAGS:=-lPocoNet -lPocoFoundation
+LDFLAGS:=-lPocoNet -lPocoUtil -lPocoFoundation
 
 SRCS:=$(wildcard *.cpp)
 OBJS:=$(SRCS:.cpp=.o)

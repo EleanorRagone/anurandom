@@ -11,7 +11,7 @@ int main(void)
   AnuRandom rnd;
   AnuRandom::Data data=rnd.read();
   cout<<"got "<<data.size()<<" bytes"<<endl;
-  for_each( data.begin(), data.end(), [](uint8_t c) { cout<<c; } );
+  //for_each( data.begin(), data.end(), [](uint8_t c) { cout<<c; } );
   cout<<endl;
   return 0;
 }

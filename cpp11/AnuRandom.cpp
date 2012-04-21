@@ -4,17 +4,21 @@
  * note: parts of network IO have been taken from boost::asio examples.
  *
  */
+#include <fstream>
 #include <sstream>
 #include <cassert>
 #include <Poco/StreamCopier.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPClientSession.h>
+#include <Poco/Util/XMLConfiguration.h>
 
 #include "AnuRandom.hpp"
 
 using namespace std;
+using namespace Poco;
 using namespace Poco::Net;
+using namespace Poco::Util;
 
 
 //
@@ -23,7 +27,7 @@ using namespace Poco::Net;
 namespace
 {
 
-string readHtml(const string &host, const string &path)
+void readHtml(const string &host, const string &path, stringstream &ss)
 {
   HTTPClientSession s{host};
   HTTPRequest       request{HTTPRequest::HTTP_GET, path};
@@ -31,16 +35,25 @@ string readHtml(const string &host, const string &path)
 
   HTTPResponse response;
   istream&     is = s.receiveResponse(response);
-  stringstream ss;
   Poco::StreamCopier::copyStream(is, ss);
-
-  return ss.str();
 } // readHtml()
 
 
-void parseFromHtml(const string html, AnuRandom::Data &out)
+struct HtmlReader: public XMLConfiguration
 {
-}
+  explicit HtmlReader(istream &is):
+    XMLConfiguration{is}
+  {
+  }
+};
+
+
+void parseFromHtml(stringstream &html, AnuRandom::Data &out)
+{
+  HtmlReader   xml{html};
+  const string str=xml.getString("body.div.table.tr.td");
+  copy( str.begin(), str.end(), back_insert_iterator<AnuRandom::Data>{out} );
+} // parseFromHtml()
 
 } // unnamed namespace
 
@@ -60,11 +73,14 @@ public:
 
   void read(Data &out)
   {
-    string html=readHtml(host_, path_);
+    stringstream html;
+    readHtml(host_, path_, html);
+{                                                               
+string tmp=html.str();                                                  
+copy( tmp.begin(), tmp.end(), back_insert_iterator<Data>{out} );            
+}                                                                       
     //parseHtml( move(html), out );
     parseFromHtml(html, out);
-    copy( html.begin(), html.end(), back_insert_iterator<Data>{out} );
-    // TODO
   }
 
 private:
