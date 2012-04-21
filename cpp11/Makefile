@@ -5,12 +5,14 @@
 CXX:=g++-4.7
 CXXFLAGS:=-std=c++11
 
-#CXX:=g++-4.6
-#CXXFLAGS:=-std=c++0x
+CXX:=g++-4.6
+CXXFLAGS:=-std=c++0x
 
 
-# common flags
+# common part
+STRIP:=strip
 CXXFLAGS+=-Wall -O3 -DNDEBUG -pipe -MD
+LDFLAGS:=-lboost_system
 
 SRCS:=$(wildcard *.cpp)
 OBJS:=$(SRCS:.cpp=.o)
@@ -25,7 +27,8 @@ all: example.out
 	$(CXX) $(CXXFLAGS) -c $*.cpp
 
 example.out: $(OBJS)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
+	$(STRIP) $@
 
 .PHONY: clean
 clean:
