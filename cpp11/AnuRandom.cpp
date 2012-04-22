@@ -29,13 +29,35 @@ namespace
 
 void readHtml(const string &host, const string &path, stringstream &ss)
 {
-  HTTPClientSession s{host};
-  HTTPRequest       request{HTTPRequest::HTTP_GET, path};
-  s.sendRequest(request);
+  try
+  {
+    HTTPClientSession s{host};
+    HTTPRequest       request{HTTPRequest::HTTP_GET, path};
+    s.sendRequest(request);
 
-  HTTPResponse response;
-  istream&     is = s.receiveResponse(response);
-  Poco::StreamCopier::copyStream(is, ss);
+    HTTPResponse response;
+    istream&     is = s.receiveResponse(response);
+    if( response.getStatus() != HTTPResponse::HTTP_OK )
+    {
+      stringstream err;
+      err << "invalid HTTP response from '" << host << "', while requesting '"
+          << path << "' - status " << response.getStatus() << ": " << response.getReason();
+      throw AnuRandom::ExceptionIO{ err.str() };
+    }
+    Poco::StreamCopier::copyStream(is, ss);
+  }
+  catch(const AnuRandom::ExceptionIO &ex)
+  {
+    throw ex;
+  }
+  catch(const Poco::Exception &ex)
+  {
+    throw AnuRandom::ExceptionIO{string{"I/O error: "} + ex.displayText()};
+  }
+  catch(const std::exception &ex)
+  {
+    throw AnuRandom::ExceptionIO{string{"I/O error: "} + ex.what()};
+  }
 } // readHtml()
 
 
@@ -50,9 +72,17 @@ struct HtmlReader: public XMLConfiguration
 
 void parseFromHtml(stringstream &html, AnuRandom::Data &out)
 {
-  HtmlReader   xml{html};
-  const string str=xml.getString("body.div.table.tr.td");
-  copy( str.begin(), str.end(), back_insert_iterator<AnuRandom::Data>{out} );
+  const string location="body.div.table.tr.td";
+  try
+  {
+    HtmlReader   xml{html};
+    const string str=xml.getString(location);
+    copy( str.begin(), str.end(), back_insert_iterator<AnuRandom::Data>{out} );
+  }
+  catch(const std::exception &ex)
+  {
+    throw AnuRandom::ExceptionParseError{"unable to parse '" + location + "' from input: " + ex.what()};
+  }
 } // parseFromHtml()
 
 } // unnamed namespace
@@ -67,8 +97,10 @@ class AnuRandom::Impl
 public:
   Impl(string&& host, string&& path):
     host_{ move(host) },
-    path_{ fixPath( move(path) ) }
+    path_{ move(path) }
   {
+    if(path_.empty() || path_[0]!='/')
+      throw ExceptionParameterError{ "invalid path '" + path_ + "' - must start with '/'" };
   }
 
   void read(Data &out)
@@ -84,14 +116,6 @@ copy( tmp.begin(), tmp.end(), back_insert_iterator<Data>{out} );
   }
 
 private:
-  // ensure path starts with the leading '/'
-  string fixPath(string in) const
-  {
-    if(in.empty() || in[0]!='/')
-      return "/"+move(in);
-    return move(in);
-  }
-
   const string host_;
   const string path_;
 };

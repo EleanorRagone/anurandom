@@ -39,7 +39,7 @@ public:
   typedef std::vector<uint8_t> Data;
 
   explicit AnuRandom(std::string host="150.203.48.55",
-                     std::string path="RawHex.php");
+                     std::string path="/RawHex.php");
   ~AnuRandom(void);
 
   void read(Data &out);

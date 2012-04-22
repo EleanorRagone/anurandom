@@ -8,6 +8,7 @@ using namespace std;
 
 int main(void)
 {
+  //AnuRandom rnd{"www.onet.pl", "/index.html"};
   AnuRandom rnd;
   AnuRandom::Data data=rnd.read();
   cout<<"got "<<data.size()<<" bytes"<<endl;
