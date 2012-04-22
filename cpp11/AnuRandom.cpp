@@ -24,7 +24,7 @@ using namespace Poco::Util;
 namespace
 {
 
-// reads htmpl page from 'path' on host 'host' to stream 'ss'
+// reads html page from 'path' on host 'host' to stream 'ss'
 void readHtml(const string &host, const string &path, stringstream &ss)
 {
   try
@@ -85,7 +85,7 @@ inline uint8_t toByte(const char c)
 } // toByte()
 
 
-// conver given hex-string to byte array
+// convert given hex-string to byte array
 void toByteArray(string str, AnuRandom::Data &out)
 {
   // prepare space for the known-size array
@@ -137,7 +137,7 @@ void parseFromHtml(stringstream &html, AnuRandom::Data &out)
 // API's PIMPL implementation
 //
 
-/** \brief implementaiton class for AnuRandom.
+/** \brief implementation class for AnuRandom.
  */
 class AnuRandom::Impl
 {

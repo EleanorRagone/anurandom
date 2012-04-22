@@ -1,5 +1,5 @@
 /*
- * API for getting truely random data from ANU Quantum Random Number Server
+ * API for getting truly random data from ANU Quantum Random Number Server
  * (http://150.203.48.55/) in the byte-array form.
  *
  * implemented by Bartek 'BaSz' Szurgot (http://www.baszerr.eu)
@@ -16,12 +16,12 @@
 #include <cstdint>
 
 
-/** \brief ANU random numbe random number generator server's API.
+/** \brief ANU random number random number generator server's API.
  */
 class AnuRandom
 {
 public:
-  /** \brief exception thrown on paramter error.
+  /** \brief exception thrown on parameter error.
    */
   struct ExceptionParameterError: public std::runtime_error
   {
@@ -62,7 +62,7 @@ public:
 
   /** \brief create object for reading random data.
    *
-   *  c-tor does not connect to the server. connections are estabilished
+   *  c-tor does not connect to the server. connections are established
    *  on demand, when reads are requested. each time new connection is opened.
    *
    *  default arguments are fine for server settings as for writing this code.

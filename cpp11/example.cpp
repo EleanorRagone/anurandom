@@ -7,7 +7,7 @@ using namespace std;
 
 namespace
 {
-// look-up table for char to hex convertion (vim rulez! ;))
+// look-up table for char to hex conversion (vim rulez! ;))
 const string g_lut[256] = {
                             "00", "01", "02", "03", "04", "05", "06", "07",
                             "08", "09", "0a", "0b", "0c", "0d", "0e", "0f",
@@ -49,7 +49,6 @@ int main(void)
   AnuRandom rnd;
   AnuRandom::Data data=rnd.read();
   cout<<"got "<<data.size()<<" bytes"<<endl;
-  //for_each( data.begin(), data.end(), [](uint8_t c) { cout<<c; } );
   for_each( data.begin(), data.end(), [](uint8_t c) { cout<<g_lut[c]; } );
   cout<<endl;
   return 0;
