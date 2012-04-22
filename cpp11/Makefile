@@ -5,8 +5,8 @@
 CXX:=g++-4.7
 CXXFLAGS:=-std=c++11
 
-CXX:=g++-4.6
-CXXFLAGS:=-std=c++0x
+#CXX:=g++-4.6
+#CXXFLAGS:=-std=c++0x
 
 CXXFLAGS+=-O3 -DNDEBUG
 #CXXFLAGS+=-g3

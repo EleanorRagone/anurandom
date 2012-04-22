@@ -80,7 +80,7 @@ inline uint8_t toByte(const char c)
     return lc-'a'+10;
   // oops - some error
   stringstream err;
-  err << "non-hex passed for the convertion: " << c << " (" << unsigned{c} << ")";
+  err << "non-hex passed for the convertion: " << c << " (" << int{c} << ")";
   throw AnuRandom::ExceptionParseError{ err.str() };
 } // toByte()
 
