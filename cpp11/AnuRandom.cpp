@@ -66,8 +66,7 @@ struct HtmlReader: public XMLConfiguration
 {
   explicit HtmlReader(istream &is):
     XMLConfiguration{is}
-  {
-  }
+  { }
 };
 
 
