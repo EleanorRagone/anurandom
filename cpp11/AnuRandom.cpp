@@ -1,10 +1,7 @@
 /*
  * implemented by Bartek 'BaSz' Szurgot (http://www.baszerr.eu)
  *
- * note: parts of network IO have been taken from boost::asio examples.
- *
  */
-#include <fstream>
 #include <sstream>
 #include <cassert>
 #include <Poco/StreamCopier.h>
@@ -22,28 +19,31 @@ using namespace Poco::Util;
 
 
 //
-// helper classes
+// helpers
 //
 namespace
 {
 
+// reads htmpl page from 'path' on host 'host' to stream 'ss'
 void readHtml(const string &host, const string &path, stringstream &ss)
 {
   try
   {
     HTTPClientSession s{host};
+    // send request
     HTTPRequest       request{HTTPRequest::HTTP_GET, path};
     s.sendRequest(request);
-
+    // process response
     HTTPResponse response;
     istream&     is = s.receiveResponse(response);
-    if( response.getStatus() != HTTPResponse::HTTP_OK )
+    if( response.getStatus() != HTTPResponse::HTTP_OK ) // invalid status?
     {
       stringstream err;
       err << "invalid HTTP response from '" << host << "', while requesting '"
           << path << "' - status " << response.getStatus() << ": " << response.getReason();
       throw AnuRandom::ExceptionIO{ err.str() };
     }
+    // copy stream's content to the output one
     Poco::StreamCopier::copyStream(is, ss);
   }
   catch(const AnuRandom::ExceptionIO &ex)
@@ -61,6 +61,7 @@ void readHtml(const string &host, const string &path, stringstream &ss)
 } // readHtml()
 
 
+// XMLConfiguration has protected c-tor, so the wrapper class is required
 struct HtmlReader: public XMLConfiguration
 {
   explicit HtmlReader(istream &is):
@@ -70,18 +71,63 @@ struct HtmlReader: public XMLConfiguration
 };
 
 
+// convert given char (hex) to numeric value
+inline uint8_t toByte(const char c)
+{
+  if( '0'<=c && c<='9' )
+    return c-'0';
+  const char lc=tolower(c);
+  if( 'a'<=lc && lc<='f' )
+    return lc-'a'+10;
+  // oops - some error
+  stringstream err;
+  err << "non-hex passed for the convertion: " << c << " (" << unsigned{c} << ")";
+  throw AnuRandom::ExceptionParseError{ err.str() };
+} // toByte()
+
+
+// conver given hex-string to byte array
+void toByteArray(string str, AnuRandom::Data &out)
+{
+  // prepare space for the known-size array
+  out.reserve( out.size() + str.length() );
+
+  // convert every two characters into a byte
+  size_t  i=0;
+  uint8_t byte=0;
+  for(char c: str)
+  {
+    // skip new lines, if present
+    if(c=='\r' || c=='\n')
+      continue;
+    // conversion itself
+    const uint8_t tmp=toByte(c);
+    assert(tmp<=0x0F);
+    if( (i%2)==0 )
+      byte=tmp<<4;
+    else
+    {
+      out.push_back(byte|tmp);
+      byte=0;
+    }
+    ++i;
+  }
+}
+
+
+// parse input html in order to extract content - random data
 void parseFromHtml(stringstream &html, AnuRandom::Data &out)
 {
-  const string location="body.div.table.tr.td";
+  const char *location="body.div.div[1].table.tr.td";   // path to where random data is being stored
   try
   {
-    HtmlReader   xml{html};
-    const string str=xml.getString(location);
-    copy( str.begin(), str.end(), back_insert_iterator<AnuRandom::Data>{out} );
+    HtmlReader   xml{html};                             // reader
+    const string str=xml.getString(location);           // get given location's content
+    toByteArray( move(str), out);                       // convert to output format
   }
   catch(const std::exception &ex)
   {
-    throw AnuRandom::ExceptionParseError{"unable to parse '" + location + "' from input: " + ex.what()};
+    throw AnuRandom::ExceptionParseError{string{"unable to parse '"} + location + "' from input: " + ex.what()};
   }
 } // parseFromHtml()
 
@@ -107,11 +153,6 @@ public:
   {
     stringstream html;
     readHtml(host_, path_, html);
-{                                                               
-string tmp=html.str();                                                  
-copy( tmp.begin(), tmp.end(), back_insert_iterator<Data>{out} );            
-}                                                                       
-    //parseHtml( move(html), out );
     parseFromHtml(html, out);
   }
 

@@ -8,10 +8,13 @@ CXXFLAGS:=-std=c++11
 CXX:=g++-4.6
 CXXFLAGS:=-std=c++0x
 
+CXXFLAGS+=-O3 -DNDEBUG
+#CXXFLAGS+=-g3
+
 
 # common part
 STRIP:=strip
-CXXFLAGS+=-Wall -O3 -DNDEBUG -pipe -MD
+CXXFLAGS+=-Wall -pipe -MD
 LDFLAGS:=-lPocoNet -lPocoUtil -lPocoFoundation
 
 SRCS:=$(wildcard *.cpp)
