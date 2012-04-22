@@ -13,6 +13,7 @@ CXXFLAGS+=-O3 -DNDEBUG
 
 
 # common part
+DOXYGEN:=doxygen
 STRIP:=strip
 CXXFLAGS+=-Wall -pipe -MD
 LDFLAGS:=-lPocoNet -lPocoUtil -lPocoFoundation
@@ -23,6 +24,13 @@ DEPS:=$(SRCS:.cpp=.d)
 
 .PHONY: all
 all: example.out
+
+.PHONY: doc
+doc: Doxyfile
+	$(DOXYGEN) > /dev/null
+
+Doxyfile:
+	$(DOXYGEN) -g > /dev/null
 
 -include $(DEPS)
 
@@ -35,4 +43,5 @@ example.out: $(OBJS)
 
 .PHONY: clean
 clean:
+	rm -rfv html latex Doxyfile
 	rm -vf *.o *.out *.d

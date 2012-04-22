@@ -2,3 +2,7 @@
 *.d
 *.out
 .*.swp
+
+Doxyfile
+html
+latex

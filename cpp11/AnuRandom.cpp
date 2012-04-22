@@ -137,9 +137,15 @@ void parseFromHtml(stringstream &html, AnuRandom::Data &out)
 // API's PIMPL implementation
 //
 
+/** \brief implementaiton class for AnuRandom.
+ */
 class AnuRandom::Impl
 {
 public:
+  /** \brief creates instance with a given parameters.
+   *  \param host host to connect to.
+   *  \param path path to download.
+   */
   Impl(string&& host, string&& path):
     host_{ move(host) },
     path_{ move(path) }
@@ -148,6 +154,9 @@ public:
       throw ExceptionParameterError{ "invalid path '" + path_ + "' - must start with '/'" };
   }
 
+  /** \brief read next portion of random data.
+   *  \param out collection to output random bytes to.
+   */
   void read(Data &out)
   {
     stringstream html;
@@ -156,8 +165,8 @@ public:
   }
 
 private:
-  const string host_;
-  const string path_;
+  const string host_;   ///< host name or IP
+  const string path_;   ///< path to file on the server
 };
 
 
