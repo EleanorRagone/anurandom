@@ -42,7 +42,7 @@ public class AnuRandom{
 
 	/**
 	Constructor.
-	@param The number of bytes to download
+	@param numberOfBytes The number of bytes to download
 	*/
 	public AnuRandom(int numberOfBytes){
 		this.numberOfBytes = numberOfBytes;
@@ -53,7 +53,7 @@ public class AnuRandom{
 
 	/**
 	Set the number of bytes.
-	@param The new number of bytes
+	@param numberOfBytes The new number of bytes
 	*/
 	public void setNumberOfBytes(int numberOfBytes){
 		this.numberOfBytes = numberOfBytes;
