@@ -3,6 +3,7 @@ public class example{
 		AnuRandom random = new AnuRandom();
 		random.getPage();
 		random.parsePage();
+
 		String temp = new String(random.getBytes());
 		System.out.println(temp);
 	}

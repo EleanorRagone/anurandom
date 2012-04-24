@@ -42,7 +42,7 @@ public class AnuRandom{
 
 	public void getPage(){
 		try{
-			URL u = new URL("http://150.203.48.55/RawHex.php");
+			URL u = new URL("http://150.203.48.55/RawChar.php");
 			this.in = new DataInputStream(new BufferedInputStream(u.openStream()));
 			String temp = "";
 			while ((temp = this.in.readLine()) != null){
