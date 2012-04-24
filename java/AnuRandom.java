@@ -11,27 +11,27 @@ A class for downloading and parsing a 1024 bytes of random data from http://150.
 public class AnuRandom{
 
 	/**
-	DataInputStream using for reading from the website
+	DataInputStream using for reading from the website.
 	*/
 	private DataInputStream in;
 
 	/**
-	Variable temporary storing the webpage
+	Variable temporary storing the webpage.
 	*/
 	private String page;
 
 	/**
-	Stores the bytes as a String variable
+	Stores the bytes as a String variable.
 	*/
 	private String bytes;
 
 	/**
-	The number of bytes to download
+	The number of bytes to download.
 	*/
 	private int numberOfBytes;
 
 	/**
-	Standard constructor
+	Standard constructor.
 	*/
 	public AnuRandom(){
 		this.in = null;
@@ -41,7 +41,7 @@ public class AnuRandom{
 	}
 
 	/**
-	Constructor
+	Constructor.
 	@param The number of bytes to download
 	*/
 	public AnuRandom(int numberOfBytes){
@@ -52,7 +52,7 @@ public class AnuRandom{
 	}
 
 	/**
-	Set the number of bytes
+	Set the number of bytes.
 	@param The new number of bytes
 	*/
 	public void setNumberOfBytes(int numberOfBytes){
@@ -60,7 +60,7 @@ public class AnuRandom{
 	}
 
 	/**
-	Returns the number of bytes
+	Returns the number of bytes.
 	@return The number of bytes
 	*/
 	public int getNumberOfBytes(){
@@ -68,7 +68,8 @@ public class AnuRandom{
 	}
 
 	/**
-	Returns the bytes from the webpage
+	Runs to methods to download and parse the webpage.
+	Returns the bytes from the webpage.
 	@return The downloaded bytes
 	*/
 	public byte[] getBytes(){
@@ -89,7 +90,7 @@ public class AnuRandom{
 	}
 
 	/**
-	Downloads the webpage and stores it in memory
+	Downloads the webpage and stores it in memory.
 	*/
 	public void getPage(){
 		try{
