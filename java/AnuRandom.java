@@ -6,12 +6,14 @@ public class AnuRandom{
 	private DataInputStream in;
 
 	private String page;
+	private String bytes;
 
 	private int numberOfBytes;
 
 	public AnuRandom(){
 		this.in = null;
 		this.page = "";
+		this.bytes = "";
 		this.numberOfBytes = 0;
 	}
 
@@ -19,6 +21,7 @@ public class AnuRandom{
 		this.numberOfBytes = numberOfBytes;
 		this.in = null;
 		this.page = "";
+		this.bytes = "";
 	}
 
 	public void setNumberOfBytes(int numberOfBytes){
@@ -31,6 +34,10 @@ public class AnuRandom{
 
 	public String getPageString(){
 		return this.page;
+	}
+
+	public byte[] getBytes(){
+		return this.bytes.getBytes();
 	}
 
 	public void getPage(){
@@ -58,5 +65,18 @@ public class AnuRandom{
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void parsePage(){
+
+		int start;
+		int end;
+
+		start = this.page.indexOf("<table class=\"rng\" cellpadding=\"10\"> <tr><td>");
+		end = this.page.indexOf("</td></tr></table><br />", start);
+		start += 45;
+
+		this.bytes = this.page.substring(start, end);
+
 	}
 }
