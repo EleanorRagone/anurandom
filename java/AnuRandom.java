@@ -72,7 +72,20 @@ public class AnuRandom{
 	@return The downloaded bytes
 	*/
 	public byte[] getBytes(){
-		return this.bytes.getBytes();
+		byte[] temp = new byte[this.numberOfBytes];
+		String store = "";
+
+		while(store.length() < this.numberOfBytes){
+			this.getPage();
+			this.parsePage();
+			store += this.bytes;
+		}
+		byte[] storeTemp = store.getBytes();
+		for(int i = 0; i < this.numberOfBytes; i++){
+			temp[i] = storeTemp[i];
+		}
+
+		return temp;
 	}
 
 	/**
