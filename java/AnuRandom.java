@@ -70,9 +70,32 @@ public class AnuRandom{
 	/**
 	Runs to methods to download and parse the webpage.
 	Returns the bytes from the webpage.
+	Handles exceptions internally by exiting application.
 	@return The downloaded bytes
 	*/
 	public byte[] getBytes(){
+		try {
+			return getBytesSafe();
+		} catch(MalformedURLException e){
+			e.printStackTrace();
+			System.exit(1);
+		}
+		catch(IOException e){
+			e.printStackTrace();
+			System.exit(1);
+		}
+		return null;
+	}
+	
+	/**
+	Runs to methods to download and parse the webpage.
+	Returns the bytes from the webpage.
+	Passes exceptions to be handled externally
+	@return The downloaded bytes
+	@throws IOException 
+	@throws MalformedURLException 
+	 */
+	public byte[] getBytesSafe() throws MalformedURLException, IOException {
 		byte[] temp = new byte[this.numberOfBytes];
 		String store = "";
 
@@ -91,8 +114,11 @@ public class AnuRandom{
 
 	/**
 	Downloads the webpage and stores it in memory.
+	@throws MalformedURLException 
+	@throws IOException 
 	*/
-	public void getPage(){
+	@SuppressWarnings("deprecation")
+	public void getPage() throws MalformedURLException, IOException {
 		try{
 			URL u = new URL("http://150.203.48.55/RawChar.php");
 			this.in = new DataInputStream(new BufferedInputStream(u.openStream()));
@@ -100,18 +126,11 @@ public class AnuRandom{
 			while ((temp = this.in.readLine()) != null){
 				this.page += temp;
 			}
-		}
-		catch(MalformedURLException e){
-			e.printStackTrace();
-			System.exit(1);
-		}
-		catch(IOException e){
-			e.printStackTrace();
-			System.exit(1);
-		}
-		finally{
+		} finally{
 			try{
-				this.in.close();
+				if(this.in != null) {
+					this.in.close();
+				}
 			}
 			catch(IOException e){
 				e.printStackTrace();
