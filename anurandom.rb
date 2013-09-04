@@ -2,7 +2,7 @@ require 'open-uri'
 
 class ANURandom
 
-  def getRandom(type="BINARY")
+  def self.getRandom(type="BINARY")
 
     if type == "BINARY"
       url = "http://150.203.48.55/RawBin.php"
@@ -16,15 +16,15 @@ class ANURandom
     return num
   end
 
-  def getBin()
+  def self.getBin()
     getRandom "BINARY"
   end
 
-  def getHex()
+  def self.getHex()
     getRandom "HEX"
   end
 
-  def getChar()
+  def self.getChar()
     getRandom "CHAR"
   end
 
