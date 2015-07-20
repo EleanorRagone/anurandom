@@ -1,0 +1,5 @@
+1. compile in gnu/linux with "gcc -lcurl -o anurandom anurandom.c anurandom.h"
+
+2. run with "./anurandom --help"
+
+3. profit!
