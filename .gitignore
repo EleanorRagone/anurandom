@@ -2,6 +2,8 @@
 *.d
 *.out
 .*.swp
+/bin/*
+anurandom.c.depend
 
 Doxyfile
 html

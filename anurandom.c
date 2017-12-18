@@ -23,32 +23,32 @@ int main(int argc, char* argv[])
 		help_with_help(argv[0]);
 		return 0;
 	}
-	else if (opt_chk=strcmp(argv[1], "--help") == 0)
+	else if ((opt_chk=strcmp(argv[1], "--help")) == 0)
 	{
 		help_text(argv[0]);
 		return 0;
 	}
-	else if (opt_chk=strcmp(argv[1], "-rb") == 0)
+	else if ((opt_chk=strcmp(argv[1], "-rb")) == 0)
 	{
 		QRNG_source_type=1;
 	}
-	else if (opt_chk=strcmp(argv[1], "-rh") == 0)
+	else if ((opt_chk=strcmp(argv[1], "-rh")) == 0)
 	{
 		QRNG_source_type=2;
 	}
-	else if (opt_chk=strcmp(argv[1], "-rc") == 0)
+	else if ((opt_chk=strcmp(argv[1], "-rc")) == 0)
 	{
 		QRNG_source_type=3;
 	}
-	else if (opt_chk=strcmp(argv[1], "-bb") == 0)
+	else if ((opt_chk=strcmp(argv[1], "-bb")) == 0)
 	{
 		QRNG_source_type=4;
 	}
-	else if (opt_chk=strcmp(argv[1], "-cb") == 0)
+	else if ((opt_chk=strcmp(argv[1], "-cb")) == 0)
 	{
 		QRNG_source_type=5;
 	}
-	else if (opt_chk=strcmp(argv[1], "-hb") == 0)
+	else if ((opt_chk=strcmp(argv[1], "-hb")) == 0)
 	{
 		QRNG_source_type=6;
 	}
@@ -86,12 +86,12 @@ int main(int argc, char* argv[])
 				break;
 			case 5:
 				curl_easy_setopt(curl, CURLOPT_URL, CHAR_BLOCK);
-				break;				
+				break;
 			case 6:
 				curl_easy_setopt(curl, CURLOPT_URL, HEX_BLOCK);
 				break;
 		}
-		
+
 		/*Function Pointer "StoreCB" manages the required buffer size*/
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, StoreCB);
 
@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
 /*
  * Next, we skip verification of cert.
  * This is not very secure.
- * If accessing a site with a cert not in your bundle use CURLOPT_CAPATH 
+ * If accessing a site with a cert not in your bundle use CURLOPT_CAPATH
  */
 		#ifdef SKIP_PEER_VERIFICATION
 		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
@@ -132,14 +132,14 @@ int main(int argc, char* argv[])
  * Possible inefficiencies
  * Most probable point of new implementations/modifications/etc..
  */
-	
+
 	if (QRNG_source_type > 5)
 	{
 		ran_data=malloc(THIS_IS_MADNESS);
         	ran_data=extract_block(ANU_raw, ran_data);
 		fprintf(stdout, "%s", ran_data);
 		free(ran_data);
-		
+
 	}
 	else if (QRNG_source_type > 3)
 	{
@@ -182,7 +182,7 @@ size_t StoreCB(char *contents, size_t size, size_t nmemb, void *userpntr)
 }
 
 char* extract_block (mem_struct steven_segal, char* schnitzel)
-{	
+{
 	/*Movement*/
 	int cntr1=0;
 	int cntr2=0;
@@ -224,7 +224,7 @@ char* extract_block (mem_struct steven_segal, char* schnitzel)
 	/*Terminate string and then return the pointer to the adress of the start of the string*/
 	*schnitzel='\0';
 	schnitzel-=cntr1;
-	
+
 	SERVE schnitzel; //fuck yeah we do..!
 }
 
@@ -232,7 +232,7 @@ char* extract_block (mem_struct steven_segal, char* schnitzel)
 void help_with_help(char* CharlesBronson)
 {
 	printf("\nUsage: %s [OPTION]\n", CharlesBronson);
-	printf("Try: %s --help\n\n");
+	printf("Try: %s --help\n\n", CharlesBronson);
 }
 void help_text(char* NoIdea)
 {
