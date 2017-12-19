@@ -3,7 +3,7 @@
 *.out
 .*.swp
 /bin/*
-anurandom.c.depend
+/c11/anurandom.c.depend
 
 Doxyfile
 html

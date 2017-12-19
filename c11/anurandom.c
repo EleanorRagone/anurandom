@@ -1,10 +1,14 @@
 /***********************************************
- *This file is provided along with it's license*
- *file "anurandom_C_implementation-COPYING".   *
- *Contained therein are the licenses specific  *
- *to this anurandom C programming language     *
- *implementation.  The license may be opened   *
- *for viewing with any text editor.            *
+ *NOTICE:                                      *
+ *libcurl code is covered by the copyright and *
+ *permission notice located in the file        *
+ *"NOTICE.libcurl"; which should have been     *
+ *and must be included with this software.     *
+ *                                             *
+ *This constitutes notice of such.             *
+ *                                             *
+ *All other code resides in the public domain  *
+ *and is authored by Goat Avenger              *
  ***********************************************/
 
 
