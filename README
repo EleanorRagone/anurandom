@@ -1,13 +1,13 @@
 Implementations in various languages of the Quantom Random Number Generator provided by:
 - ANU Quantum Optics: http://photonics.anu.edu.au/qoptics/Research/qrng.php
-- Bartek 'BaSz' Szurgot: http://www.baszerr.eu --->C++ implementation
-- Goat Avenger ---> C implementation
-- Caitlin 'caitelatte': http://caitelatte.com ---> Ruby implementation
-- Kristian Lundkvist <kristian.lundkvist@gmail.com> --->Java implementation
-- Peter Ragone ---> initialized the original master of which this is a fork
+- Bartek 'BaSz' Szurgot: http://www.baszerr.eu --------> C++ implementation
+- Goat Avenger ----------------------------------------> C implementation
+- Caitlin 'caitelatte': http://caitelatte.com ---------> Ruby implementation
+- Kristian Lundkvist <kristian.lundkvist@gmail.com> ---> Java implementation
+- Peter Ragone ----------------------------------------> Project starter
 
 
 ---
-This project was started by pcragone quite a few years ago now.  My C implementation and a ruby implementation never made the push to pcragone's master.  So this fork remains the most complete branch so far.  If not the completion itself.
+This project was started by pcragone quite a few years ago now.  This fork contains my C implementation and pulls in a ruby implementation.
 
 
