@@ -1,0 +1,17 @@
+I do believe the only dependency is libcurl.
+
+Devuan Jessie or Debian Jessie instructions are as follows.
+In Devuan Jessie the packages (libcurl4-gnutls-dev) and (libcurl4-openssl-dev) have been tested and work.
+so "apt-get install libcurl4-gnutls-dev" or "apt-get install libcurl4-openssl-dev" should work in Devuan or Debian Jessie.
+After that...
+---
+1. compile in gnu/linux at the terminal (Using Debian or Devuan Jessie) with "gcc -lcurl -o anurandom anurandom.c anurandom.h"
+
+2. run with "./anurandom --help"
+
+3. profit!
+
+----
+With Code::Blocks
+1. In Debian or Devuan Jessie open the codeblocks project file and just build to target Release and everything should work.  If not using Debian or Devuan I imagine this will still work so long as the libcurl or libcurl developement files are installed.
+2. Just run the program in the terminal with ./anurandom
