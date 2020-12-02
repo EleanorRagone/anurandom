@@ -35,7 +35,7 @@ func main() {
     var myRandomHex Anurandom.Hex
     myRandomHex.Generate(10, 4)
 
-    // Returns string slice containing 10, 2 character hex strings
+    // Returns string slice containing 10, 4 character hex strings
     if myRandomHex.Success == true {
         hexStrings := myRandomHex.Data
         fmt.Println(hexStrings)
